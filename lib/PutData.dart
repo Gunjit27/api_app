@@ -3,29 +3,29 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class PostData extends StatefulWidget {
-  const PostData({Key? key});
+class PutData extends StatefulWidget {
+  const PutData({Key? key});
 
   @override
-  State<PostData> createState() => _PostDataState();
+  State<PutData> createState() => _PutDataState();
 }
 
-class _PostDataState extends State<PostData> {
-  final url = "https://dummy.restapiexample.com/api/v1/create";
-  String postResponse = '';
+class _PutDataState extends State<PutData> {
+  final url = "https://dummy.restapiexample.com/api/v1/update/21/";
+  String putResponse = '';
 
-  Future<void> postData() async {
+  Future<void> putData() async {
     try {
-      final response = await http.post(
+      final response = await http.put(
         Uri.parse(url),
         body: {"name": "test", "salary": "123", "age": "23"},
       );
 
       setState(() {
-        postResponse = response.body;
+        putResponse = response.body;
       });
     } catch (e) {
-      print('Error occurred while sending post data: $e');
+      print('Error occurred while updating data: $e');
     }
   }
 
@@ -33,7 +33,7 @@ class _PostDataState extends State<PostData> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("POST"),
+        title: const Text("PUT"),
         backgroundColor: Colors.deepPurple,
       ),
       body: Container(
@@ -43,9 +43,9 @@ class _PostDataState extends State<PostData> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: postData,
+              onPressed: putData,
               style: ElevatedButton.styleFrom(
-                primary: Colors.green,
+                primary: Colors.blue,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20.0,
                   vertical: 10.0,
@@ -55,7 +55,7 @@ class _PostDataState extends State<PostData> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              child: const Text("Send Post"),
+              child: const Text("Put Data"),
             ),
             const SizedBox(height: 20),
             Expanded(
@@ -71,7 +71,7 @@ class _PostDataState extends State<PostData> {
                       style: DefaultTextStyle.of(context).style,
                       children: <TextSpan>[
                         const TextSpan(
-                          text: 'Post Response:\n',
+                          text: 'Put Response:\n',
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -79,7 +79,7 @@ class _PostDataState extends State<PostData> {
                           ),
                         ),
                         TextSpan(
-                          text: postResponse,
+                          text: putResponse,
                           style: const TextStyle(fontSize: 18),
                         ),
                       ],
