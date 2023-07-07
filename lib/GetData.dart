@@ -4,17 +4,16 @@ import 'package:http/http.dart' as http;
 String stringResponse = "";
 
 class GetData extends StatefulWidget {
-  const GetData({super.key});
+  const GetData({Key? key});
 
   @override
   State<GetData> createState() => _GetDataState();
 }
 
 class _GetDataState extends State<GetData> {
-  Future apicall() async {
+  Future<void> apiCall() async {
     http.Response response;
-    response = await http
-        .get(Uri.parse("https://dummy.restapiexample.com/api/v1/employees"));
+    response = await http.get(Uri.parse("https://dummy.restapiexample.com/api/v1/employees"));
 
     if (response.statusCode == 200) {
       setState(() {
@@ -25,7 +24,7 @@ class _GetDataState extends State<GetData> {
 
   @override
   void initState() {
-    apicall();
+    apiCall();
     super.initState();
   }
 
@@ -33,12 +32,40 @@ class _GetDataState extends State<GetData> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Get"),
+        title: const Text("GET"),
+        backgroundColor: Colors.deepPurple,
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-        child: Container(
-          child: Text(stringResponse.toString()),
+        color: Colors.grey[200],
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Text(
+              'Response:',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: SingleChildScrollView(
+                  child: Text(
+                    stringResponse,
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
